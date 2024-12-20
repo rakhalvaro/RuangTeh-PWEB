@@ -20,6 +20,10 @@
                 <input type="text" class="form-control" id="title" name="title" value="{{ $article->title }}" required>
               </div>
               <div class="mb-3">
+                <label for="description" class="form-label">Deskripsi</label>
+                <textarea class="form-control" id="description" name="description" required>{{ $article->description }}</textarea>
+              </div>
+              <div class="mb-3">
                 <label for="link" class="form-label">Link</label>
                 <input type="url" class="form-control" id="link" name="link" value="{{ $article->link }}" required>
               </div>

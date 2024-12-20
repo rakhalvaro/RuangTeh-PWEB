@@ -116,6 +116,7 @@
     <thead>
       <tr>
         <th>Judul</th>
+        <th>Deskripsi</th>
         <th>Link</th>
         <th>Status</th>
         <th>Aksi</th>
@@ -125,6 +126,7 @@
       @foreach ($articles as $article)
         <tr>
           <td>{{ $article->title }}</td>
+           <td>{{ $article->description }}</td>
           <td><a href="{{ $article->link }}" target="_blank">{{ $article->link }}</a></td>
           <td>
             @if ($article->is_published)
@@ -167,6 +169,10 @@
           <div class="mb-3">
             <label for="link" class="form-label">Link</label>
             <input type="url" class="form-control" id="link" name="link" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Deskripsi</label>
+            <textarea class="form-control" id="description" name="description" required></textarea>
           </div>
           <div class="mb-3">
             <label for="is_published" class="form-label">Status</label>

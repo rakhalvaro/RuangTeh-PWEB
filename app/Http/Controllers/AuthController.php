@@ -18,6 +18,7 @@ class AuthController extends Controller {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->remember_me ?? false)) {
+            Cookie::queue('user_logged_in', true, 60);
             return redirect()->route('dashboard.home.index');
         }
 

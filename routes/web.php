@@ -21,7 +21,7 @@ use App\Http\Controllers\Dashboard\RegionController;
 */
 
 Route::get('/', [LandingHomeController::class, 'index'])->name('landing.home.index');
-
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [AuthController::class, 'index'])->name('auth.index');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard', 'as' => 'dashboar
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
     Route::resource('products', ProductController::class)->except('create');
      Route::resource('regions', RegionController::class);
+     Route::resource('regions', RegionController::class)->except(['show']);
 });
 
 Route::get('/products/{product}/click', [ProductController::class, 'handleClick'])->name('products.handleClick');

@@ -38,23 +38,43 @@ class RegionController extends Controller
             $province->cities()->create(['name' => $cityName]);
         }
 
-        return redirect()->route('dashboard.regions.index')->with('success', 'Region berhasil ditambahkan');
+        return redirect()->route('dashboard.regions.index')->with('success', 'Region berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $province = Province::with('cities')->findOrFail($id);
+        return view('dashboard.regions.edit', [
+            'title' => 'Edit Region',
+            'province' => $province,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'cities' => 'required|array',
+            'cities.*' => 'required|string|max:255',
+        ]);
+
+        $province = Province::findOrFail($id);
+        $province->update(['name' => $request->name]);
+
+        $province->cities()->delete();
+        foreach ($request->cities as $cityName) {
+            $province->cities()->create(['name' => $cityName]);
+        }
+
+        return redirect()->route('dashboard.regions.index')->with('success', 'Region berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         $province = Province::findOrFail($id);
-
-        // Hapus semua kota yang terkait dengan provinsi
         $province->cities()->delete();
-        // Hapus provinsi
         $province->delete();
-        return redirect()->route('dashboard.regions.index')->with('success', 'Region berhasil dihapus');
-    }
 
-    public function getCitiesByProvince($province_id)
-    {
-        $cities = City::where('province_id', $province_id)->get();
-        return response()->json($cities);
+        return redirect()->route('dashboard.regions.index')->with('success', 'Region berhasil dihapus.');
     }
 }

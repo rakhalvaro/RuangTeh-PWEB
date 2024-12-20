@@ -178,6 +178,10 @@
         </div>
     @endif
 
+ <div class="text-center mt-4">
+    <a href="{{ route('products.search') }}" class="btn btn-login">Cari Produk di Kota Anda</a>
+</div>
+
     <section class="section latest-articles" id="latest-articles">
         <div class="container">
             <h2 class="h2 section-title">Artikel Terbaru</h2>
@@ -187,7 +191,7 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h4 class="card-title" style="font-size: 1.5rem; font-weight: bold;">{{ $article->title }}</h4>
-                                <p class="card-text">{{ Str::limit($article->content, 100) }}</p>
+                                <p class="card-text">{{ Str::limit($article->description, 1000) }}</p>
                                 <a href="{{ route('articles.handleClick', $article) }}"  target="_blank">Baca Selengkapnya</a>
                             </div>
                         </div>
@@ -229,7 +233,7 @@
           </a>
 
           <p class="footer-text">
-           Ruang Teh adalah Sistem Layanan Informasi Terintegrasi Tentang Teh.
+           Ruang Teh adalah platform yang menyediakan berbagai macam produk terbaru dengan harga terjangkau.
           </p>
         </div>
 

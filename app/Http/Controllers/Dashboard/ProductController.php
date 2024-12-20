@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Province;
 use App\Models\City;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -82,5 +83,23 @@ class ProductController extends Controller
         $product->increment('clicks');
         return redirect($product->url);
     }
-    
+     public function search(Request $request)
+    {
+        $query = Product::query();
+
+        if ($request->filled('province_id')) {
+            $query->whereHas('city.province', function($q) use ($request) {
+                $q->where('id', $request->province_id);
+            });
+        }
+
+        if ($request->filled('city_id')) {
+            $query->where('city_id', $request->city_id);
+        }
+
+        $products = $query->get();
+        $provinces = Province::all();
+
+        return view('landing.products.index', compact('products', 'provinces'));
+    }
 }

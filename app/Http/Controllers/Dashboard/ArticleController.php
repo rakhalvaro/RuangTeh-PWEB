@@ -27,12 +27,15 @@ class ArticleController extends Controller
             'title' => 'required',
             'link' => 'required|url',
             'is_published' => 'required|boolean',
+            "description" => "required",
         ]);
 
         Article::create([
             'title' => $request->title,
             'link' => $request->link,
             'is_published' => $request->is_published,
+            'description' => $request->description,
+
         ]);
 
         return redirect()->route('dashboard.articles.index')->with('success', 'Artikel berhasil ditambahkan.');
@@ -50,9 +53,10 @@ class ArticleController extends Controller
             'title' => 'required',
             'link' => 'required|url',
             'is_published' => 'required|boolean',
+            'description' => 'required',
         ]);
 
-        $data = $request->only(['title', 'link', 'is_published']);
+        $data = $request->only(['title', 'link', 'is_published', 'description']);
 
         $article->update($data);
 
